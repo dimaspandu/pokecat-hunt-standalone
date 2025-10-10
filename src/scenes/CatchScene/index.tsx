@@ -29,7 +29,7 @@ export default function CatchScene() {
   // Cat speech bubbles
   useEffect(() => {
     const phrases = ["Miaw~", "Prrr~", "Nyaa!", "Miiiaww!", "Meow-meow!", "Paw~"];
-    let timeout: number | null = null;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
 
     const showSpeech = () => {
       const phrase = phrases[Math.floor(Math.random() * phrases.length)];
