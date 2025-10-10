@@ -5,6 +5,10 @@ It is built with **React 19**, **Vite**, and **Leaflet**.
 
 > Note: This version is **standalone** and does not connect to any backend or database. All Pokecats, spawning, and captures are simulated locally in the browser.
 
+Live demo is available at: [https://pokecat.fun/](https://pokecat.fun/)
+
+This repository is a standalone version. The **full version with backend and complete features** is available at: [https://github.com/dimaspandu/pokecat-hunt](https://github.com/dimaspandu/pokecat-hunt)
+
 ---
 
 ## Overview
@@ -180,6 +184,7 @@ This sub-project inherits the main [Pokecat Hunt License](../../LICENSE).
 * This frontend is part of a **monorepo** managed with **pnpm workspaces**.
 * All Pokecat interactions are **simulated locally**.
 * The CreatorScene now includes a **fallback** message when backend features are not available.
+* For the full project with backend and additional features, see: [https://github.com/dimaspandu/pokecat-hunt](https://github.com/dimaspandu/pokecat-hunt)
 
 ---
 
