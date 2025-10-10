@@ -1,0 +1,133 @@
+.map {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Popup styling for Pokecats */
+.pokecat-popup {
+  .leaflet-popup-content-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    animation: popup-fade-in 0.4s ease-out;
+  }
+
+  .leaflet-popup-content {
+    margin: 0;
+    text-align: center;
+    color: #333;
+  }
+
+  .leaflet-popup-tip {
+    background: #fff;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: popup-bounce 0.6s ease-out;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+
+    /* Applied when Pokecat starts fading out (after caught or expired) */
+    &--fadeout {
+      opacity: 0;
+      transform: scale(0.85);
+      pointer-events: none;
+      filter: blur(2px);
+    }
+  }
+
+  &__image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+    border-radius: 2rem;
+    border: 3px solid #f06595;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(240, 101, 149, 0.6);
+    padding: 0.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    /* Slight hover lift for interactivity */
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(240, 101, 149, 0.75);
+    }
+
+    /* Rarity variations */
+    &--common {
+      border-color: #aaa;
+      box-shadow: 0 0 10px rgba(170, 170, 170, 0.6);
+    }
+
+    &--rare {
+      border-color: #3b82f6;
+      box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
+    }
+
+    &--legendary {
+      border-color: #fbbf24;
+      box-shadow: 0 0 18px rgba(251, 191, 36, 0.8);
+    }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #2a2a2a;
+    letter-spacing: 0.5px;
+  }
+
+  &__button {
+    background: linear-gradient(135deg, #ff6b6b, #f06595);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.15s ease-in-out, background 0.2s, opacity 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #fa5252, #e64980);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+      transform: none;
+      background: linear-gradient(135deg, #999, #aaa);
+    }
+  }
+}
+
+/* Fade-in animation for popup wrapper */
+@keyframes popup-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Bounce animation when popup appears */
+@keyframes popup-bounce {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

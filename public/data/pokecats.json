@@ -1,0 +1,230 @@
+[
+  {
+    "id": "68e25796c31da84ccd02b384",
+    "name": "Whiskers",
+    "iconUrl": "/cats/whiskers.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e25796c31da84ccd02b385",
+    "name": "Mochi",
+    "iconUrl": "/cats/mochi.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e25796c31da84ccd02b386",
+    "name": "Pumpkin",
+    "iconUrl": "/cats/pumpkin.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e25796c31da84ccd02b387",
+    "name": "Luna",
+    "iconUrl": "/cats/luna.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e25796c31da84ccd02b388",
+    "name": "Shadow",
+    "iconUrl": "/cats/shadow.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e25796c31da84ccd02b389",
+    "name": "Cleo",
+    "iconUrl": "/cats/cleo.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e25796c31da84ccd02b38a",
+    "name": "Aurora",
+    "iconUrl": "/cats/aurora.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e25796c31da84ccd02b38b",
+    "name": "Phantom",
+    "iconUrl": "/cats/phantom.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e25796c31da84ccd02b38c",
+    "name": "Nebula",
+    "iconUrl": "/cats/nebula.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e25796c31da84ccd02b38d",
+    "name": "Zephyr",
+    "iconUrl": "/cats/zephyr.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e671d7c32d6fc362b1f175",
+    "name": "Aliyen",
+    "iconUrl": "/cats/aliyen.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e673cf2b92eb713e1ea8dc",
+    "name": "Astoria",
+    "iconUrl": "/cats/astoria.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e673e02b92eb713e1ea8dd",
+    "name": "Boa",
+    "iconUrl": "/cats/boa.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e673f02b92eb713e1ea8de",
+    "name": "Boocil",
+    "iconUrl": "/cats/boocil.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e673fd2b92eb713e1ea8df",
+    "name": "Aliyen",
+    "iconUrl": "/cats/aliyen.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e674ce2b92eb713e1ea8e0",
+    "name": "Castangel",
+    "iconUrl": "/cats/castangel.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e674f82b92eb713e1ea8e1",
+    "name": "Cowisco",
+    "iconUrl": "/cats/cowiscow.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e6750a2b92eb713e1ea8e2",
+    "name": "Crayon",
+    "iconUrl": "/cats/crayon.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e6751f2b92eb713e1ea8e3",
+    "name": "Dienice",
+    "iconUrl": "/cats/dienice.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e6f2c7732392e094c9c8bd",
+    "name": "Eldery",
+    "iconUrl": "/cats/eldery.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e6f2f0732392e094c9c8be",
+    "name": "Guardiana",
+    "iconUrl": "/cats/guardiana.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e6f308732392e094c9c8bf",
+    "name": "Hoteltowel",
+    "iconUrl": "/cats/hoteltowel.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e6f31a732392e094c9c8c0",
+    "name": "Jowy",
+    "iconUrl": "/cats/jowy.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e6f32a732392e094c9c8c1",
+    "name": "Kemocheng",
+    "iconUrl": "/cats/kemocheng.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e6fe76732392e094c9c8c2",
+    "name": "Keylee",
+    "iconUrl": "/cats/keylee.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e6fe81732392e094c9c8c3",
+    "name": "Lapmeyja",
+    "iconUrl": "/cats/lapmeyja.png",
+    "rarity": "rare"
+  },
+  {
+    "id": "68e6fe98732392e094c9c8c4",
+    "name": "Maskuli",
+    "iconUrl": "/cats/maskuli.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e70005732392e094c9c8c5",
+    "name": "Mountain",
+    "iconUrl": "/cats/mountain.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e7c9c6ea76d07f686a09bd",
+    "name": "Mujaer",
+    "iconUrl": "/cats/mujaer.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e7c9f9ea76d07f686a09be",
+    "name": "Nastar",
+    "iconUrl": "/cats/nastar.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e7ca07ea76d07f686a09bf",
+    "name": "Paintia",
+    "iconUrl": "/cats/paintia.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e7ca64ea76d07f686a09c0",
+    "name": "Reybahn",
+    "iconUrl": "/cats/reybahn.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e7ca70ea76d07f686a09c1",
+    "name": "Saras0812",
+    "iconUrl": "/cats/saras0812.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e7ca91ea76d07f686a09c2",
+    "name": "Scarlot",
+    "iconUrl": "/cats/scarlot.png",
+    "rarity": "legendary"
+  },
+  {
+    "id": "68e7caecea76d07f686a09c3",
+    "name": "Sofa",
+    "iconUrl": "/cats/sofa.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e7cb53ea76d07f686a09c4",
+    "name": "Sping",
+    "iconUrl": "/cats/sping.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e7cb69ea76d07f686a09c5",
+    "name": "Taipeketan",
+    "iconUrl": "/cats/taipeketan.png",
+    "rarity": "common"
+  },
+  {
+    "id": "68e7cb87ea76d07f686a09c6",
+    "name": "Waterfall",
+    "iconUrl": "/cats/waterfall.png",
+    "rarity": "legendary"
+  }
+]
