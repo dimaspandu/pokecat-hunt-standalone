@@ -14,6 +14,9 @@ dependencies:
   react-dom:
     specifier: ^19.1.0
     version: 19.1.0(react@19.1.0)
+  react-ga4:
+    specifier: ^2.1.0
+    version: 2.1.0
   react-leaflet:
     specifier: ^5.0.0
     version: 5.0.0(leaflet@1.9.4)(react-dom@19.1.0)(react@19.1.0)
@@ -2390,6 +2393,10 @@ packages:
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
+
+  /react-ga4@2.1.0:
+    resolution: {integrity: sha512-ZKS7PGNFqqMd3PJ6+C2Jtz/o1iU9ggiy8Y8nUeksgVuvNISbmrQtJiZNvC/TjDsqD0QlU5Wkgs7i+w9+OjHhhQ==}
+    dev: false
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}

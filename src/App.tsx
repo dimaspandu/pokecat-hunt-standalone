@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { useGameStore } from "~/stores/useGameStore";
+import { initGA, trackPage, trackEvent } from "./analytics";
 import StartHuntModal from "~/components/Fragments/StartHuntModal";
 import Notification from "~/components/Notification";
 import CollectionModal from "~/components/Fragments/CollectionModal";
@@ -31,10 +32,17 @@ export default function App() {
 
   const [showStartModal, setShowStartModal] = useState(false);
 
+  // Initialize GA once
   useEffect(() => {
+    initGA();
+  }, []);
+
+  // Track page view on route change
+  useEffect(() => {
+    trackPage(location.pathname + location.search);
     clearNotification();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   /**
    * Initialize user identity from localStorage or prompt for name on first visit.
@@ -47,8 +55,12 @@ export default function App() {
   /** Handle submission from StartHuntModal to finalize user registration */
   const handleStartSubmit = (name: string) => {
     const generatedId = "user-" + Math.random().toString(36).slice(2, 9);
-    setUser({ id: generatedId, name });
+    const newUser = { id: generatedId, name };
+    setUser(newUser);
     setShowStartModal(false);
+
+    // Track user join event in GA
+    trackEvent("User", "Join", name);
   };
 
   return (
