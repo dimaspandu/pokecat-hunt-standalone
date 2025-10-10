@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Pokecat } from "~/types/Pokecat";
 import type { GameItem } from "~/types/GameItem";
@@ -11,6 +11,17 @@ import styles from "./CatchScene.module.scss";
 export default function CatchScene() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+
+  const latStr = searchParams.get("lat") ?? "0";
+  const lngStr = searchParams.get("lng") ?? "0";
+
+  const lat = parseFloat(latStr);
+  const lng = parseFloat(lngStr);
+
   const { items, addCaught, removeItem, setNotification } = useGameStore();
 
   const [loading, setLoading] = useState(true);
@@ -28,7 +39,7 @@ export default function CatchScene() {
 
   // Cat speech bubbles
   useEffect(() => {
-    const phrases = ["Miaw~", "Prrr~", "Nyaa!", "Miiiaww!", "Meow-meow!", "Paw~"];
+    const phrases = ["Miaw~", "Prrr~", "It's not Funny!", "Nyaa!", "Miiiaww!", "Meow-meow!", "Paw~"];
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
     const showSpeech = () => {
@@ -58,7 +69,13 @@ export default function CatchScene() {
         const res = await fetch("/data/pokecats.json");
         const allCats: Pokecat[] = await res.json();
         const found = allCats.find((c) => c.id === id);
-        setCat(found ?? null);
+        setCat(found ? {
+          ...found,
+          lat,
+          lng,
+          status: "caught",
+          expiresAt: Date.now() + 1000 * 60 * (1 + Math.random() * 2)
+        } : null);
       } catch (err) {
         console.error("Failed to load pokecats.json", err);
         setCat(null);
@@ -67,7 +84,7 @@ export default function CatchScene() {
       }
     };
     fetchCat();
-  }, [id]);
+  }, [id, lat, lng]);
 
   // Random cat movement every 2.5s
   useEffect(() => {
@@ -126,7 +143,7 @@ export default function CatchScene() {
 
       setTimeout(() => {
         if (success) {
-          addCaught(cat);
+          addCaught({ ...cat, caughtAt: Date.now() });
           setNotification({ message: `You caught ${cat.name}!`, type: "success" });
         } else {
           setNotification({ message: `${cat.name} escaped!`, type: "error" });

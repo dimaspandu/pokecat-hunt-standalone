@@ -182,7 +182,7 @@ export default function MapView() {
     );
     setTimeout(() => {
       setWildCats((prev) => prev.filter((cat) => cat.id !== pc.id));
-      navigate(`/catch/${pc.id}`);
+      navigate(`/catch/${pc.id}?lat=${pc.lat}&lng=${pc.lng}`);
     }, 1000);
   };
 
