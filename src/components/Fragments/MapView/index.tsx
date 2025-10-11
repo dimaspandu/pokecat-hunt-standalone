@@ -33,7 +33,6 @@ const randomNearby = (baseLat: number, baseLng: number, spread = 0.01) => {
 
 export default function MapView() {
   const setNotification = useGameStore((s) => s.setNotification);
-  const user = useGameStore((s) => s.user);
   const navigate = useNavigate();
 
   /** Currently visible Pokecats on the map */
@@ -201,7 +200,6 @@ export default function MapView() {
    * Marks the cat as fading out, removes it after 1 second, and navigates to the catch page.
    */
   const handleCatch = (pc: Pokecat) => {
-    if (!user) return;
     setWildCats((prev) =>
       prev.map((cat) => (cat.id === pc.id ? { ...cat, fadingOut: true } : cat))
     );
@@ -245,7 +243,6 @@ export default function MapView() {
               <button
                 className={styles["pokecat-popup__button"]}
                 onClick={() => handleCatch(pc)}
-                disabled={pc.fadingOut}
               >
                 Catch
               </button>
