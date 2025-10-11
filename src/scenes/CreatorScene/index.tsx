@@ -103,6 +103,7 @@ export default function CreatorScene() {
         lng: 0,
         status: "wild",
         iconUrl,
+        caughtAt: Date.now(),
         expiresAt: Date.now() + 30 * 60 * 1000,
         rarity: randomRarity,
       };

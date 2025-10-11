@@ -14,16 +14,31 @@ export default function ScannerScene() {
   const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then((mediaStream) => {
+    const startCamera = async () => {
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" } }, // prioritize back camera
+        });
         setStream(mediaStream);
         if (videoRef.current) {
           videoRef.current.srcObject = mediaStream;
         }
-      })
-      .catch(() => {
-        setNotification({ message: "Cannot access camera", type: "error" });
-      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_) {
+        // fallback to default camera
+        try {
+          const fallbackStream = await navigator.mediaDevices.getUserMedia({ video: true });
+          setStream(fallbackStream);
+          if (videoRef.current) {
+            videoRef.current.srcObject = fallbackStream;
+          }
+        } catch {
+          setNotification({ message: "Cannot access camera", type: "error" });
+        }
+      }
+    };
+
+    startCamera();
 
     return () => {
       stream?.getTracks().forEach(track => track.stop());
@@ -53,6 +68,7 @@ export default function ScannerScene() {
         lng,
         status: "wild",
         iconUrl: randomCat.iconUrl,
+        caughtAt: Date.now(),
         expiresAt,
         rarity: randomCat.rarity,
       });

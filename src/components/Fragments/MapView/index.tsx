@@ -36,23 +36,24 @@ export default function MapView() {
   const user = useGameStore((s) => s.user);
   const navigate = useNavigate();
 
-  // State for currently visible Pokecats on the map
+  /** Currently visible Pokecats on the map */
   const [wildCats, setWildCats] = useState<LocalPokecat[]>([]);
 
-  // State for all Pokecats fetched from JSON (the pool for spawning)
+  /** Current spawn pool (cats that can appear) */
   const [allCats, setAllCats] = useState<LocalPokecat[]>([]);
 
-  // State for user's current position
-  const [userPosition, setUserPosition] = useState<LatLngExpression | null>(
-    null
-  );
+  /** Original full pool for respawning when current pool is empty */
+  const [allCatsOriginal, setAllCatsOriginal] = useState<LocalPokecat[]>([]);
 
-  // Default map center (Jakarta)
+  /** User's current location */
+  const [userPosition, setUserPosition] = useState<LatLngExpression | null>(null);
+
+  /** Default map center (Jakarta) */
   const defaultCenter: LatLngExpression = [-6.2, 106.8];
 
   /**
-   * Determine user position once on mount.
-   * If geolocation is denied or unsupported, use default center with small random offset.
+   * Determine user position on mount.
+   * If geolocation is denied, fallback to default center with small random offset.
    */
   useEffect(() => {
     if (navigator.geolocation) {
@@ -73,8 +74,7 @@ export default function MapView() {
   }, []);
 
   /**
-   * Fetch Pokecats from JSON once the user position is available.
-   * This initializes the pool of all Pokecats, but does not show them on the map yet.
+   * Fetch Pokecats from JSON and initialize both current pool and original pool.
    */
   useEffect(() => {
     if (!userPosition) return;
@@ -86,7 +86,7 @@ export default function MapView() {
 
         const { lat: userLat, lng: userLng } = L.latLng(userPosition);
 
-        // Generate the pool of Pokecats with random nearby coordinates
+        // Generate initial pool with random nearby positions
         const pool: LocalPokecat[] = data.map((cat) => {
           const { lat, lng } = randomNearby(userLat, userLng, 0.02);
           return {
@@ -102,7 +102,8 @@ export default function MapView() {
           };
         });
 
-        setAllCats(pool);
+        setAllCats(pool);          // set current spawn pool
+        setAllCatsOriginal(pool);  // save a copy for respawn
       } catch (err) {
         console.error("Failed to load Pokecats:", err);
         setNotification({ message: "Failed to load Pokecats", type: "error" });
@@ -114,35 +115,43 @@ export default function MapView() {
 
   /**
    * Spawn interval: periodically add 1-2 Pokecats from the pool to the map.
-   * This simulates Pokecats appearing gradually rather than all at once.
+   * If the pool is empty, reset it from the original full pool.
    */
   useEffect(() => {
-    if (allCats.length === 0) return;
+    if (allCatsOriginal.length === 0) return;
 
     const spawnInterval = setInterval(() => {
       setWildCats((prev) => {
-        if (allCats.length === 0) return prev;
+        // Make a local copy of the current pool
+        let pool = [...allCats];
 
-        const spawnCount = Math.floor(Math.random() * 2) + 1; // 1 or 2 cats per spawn
-        const newCats: LocalPokecat[] = [];
-
-        for (let i = 0; i < spawnCount && allCats.length > 0; i++) {
-          const idx = Math.floor(Math.random() * allCats.length);
-          newCats.push(allCats[idx]);
-          allCats.splice(idx, 1); // remove spawned cat from pool
+        // Reset pool if empty
+        if (pool.length === 0) {
+          pool = allCatsOriginal.map((c) => ({ ...c }));
         }
 
-        return [...prev, ...newCats];
+        const spawnCount = Math.floor(Math.random() * 2) + 1; // 1-2 cats
+        const newCats: LocalPokecat[] = [];
+
+        for (let i = 0; i < spawnCount && pool.length > 0; i++) {
+          const idx = Math.floor(Math.random() * pool.length);
+          newCats.push(pool[idx]);
+          pool.splice(idx, 1);
+        }
+
+        setAllCats(pool); // update current pool
+        return [...prev, ...newCats]; // add new cats to map
       });
-    }, 3000); // spawn every 3 seconds
+    }, 3000);
 
     return () => clearInterval(spawnInterval);
-  }, [allCats]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allCatsOriginal]);
 
   /**
    * Animate Pokecat movement and handle expiration.
    * Cats move slightly in a random direction every tick.
-   * Cats that expire fade out and are removed from the map.
+   * Cats sometimes stop for 1-4 seconds, then continue moving.
    */
   useEffect(() => {
     const interval = setInterval(() => {
@@ -151,21 +160,39 @@ export default function MapView() {
           .map((cat) => {
             if (cat.fadingOut) return cat;
 
+            // Expire cats that reach their lifetime
             if (Date.now() > cat.expiresAt) return { ...cat, fadingOut: true };
 
-            if (Math.random() < 0.05) cat.direction += (Math.random() - 0.5) * 60;
+            // Initialize movement toggle
+            if (cat.isMoving === undefined) cat.isMoving = Math.random() < 0.5;
+            if (!cat.nextToggle) cat.nextToggle = Date.now() + 1000 + Math.random() * 3000;
 
-            const delta = 0.00005;
-            const rad = (cat.direction * Math.PI) / 180;
-            return {
-              ...cat,
-              lat: cat.lat + Math.sin(rad) * delta,
-              lng: cat.lng + Math.cos(rad) * delta,
-            };
+            // Toggle moving/stopped state after 1-4s
+            if (Date.now() > cat.nextToggle) {
+              cat.isMoving = !cat.isMoving;
+              cat.nextToggle = Date.now() + 1000 + Math.random() * 3000;
+            }
+
+            if (cat.isMoving) {
+              // Small random direction changes
+              if (Math.random() < 0.05) cat.direction += (Math.random() - 0.5) * 60;
+              const delta = 0.00005;
+              const rad = (cat.direction * Math.PI) / 180;
+              return {
+                ...cat,
+                lat: cat.lat + Math.sin(rad) * delta,
+                lng: cat.lng + Math.cos(rad) * delta,
+                isMoving: cat.isMoving,
+                nextToggle: cat.nextToggle,
+              };
+            }
+
+            return { ...cat, isMoving: cat.isMoving, nextToggle: cat.nextToggle };
           })
-          .filter((cat) => !cat.fadingOut) // remove fading out cats
+          .filter((cat) => !cat.fadingOut) // remove expired cats
       );
-    }, 60); // update ~16 times per second
+    }, 60); // ~16fps
+
     return () => clearInterval(interval);
   }, []);
 
@@ -176,9 +203,7 @@ export default function MapView() {
   const handleCatch = (pc: Pokecat) => {
     if (!user) return;
     setWildCats((prev) =>
-      prev.map((cat) =>
-        cat.id === pc.id ? { ...cat, fadingOut: true } : cat
-      )
+      prev.map((cat) => (cat.id === pc.id ? { ...cat, fadingOut: true } : cat))
     );
     setTimeout(() => {
       setWildCats((prev) => prev.filter((cat) => cat.id !== pc.id));
@@ -199,9 +224,9 @@ export default function MapView() {
       />
       {userPosition && <FlyToUser position={userPosition} />}
 
-      {wildCats.map((pc) => (
+      {wildCats.map((pc, idx) => (
         <Marker
-          key={pc.id}
+          key={[pc.id, idx].join("-")}
           position={[pc.lat, pc.lng]}
           icon={createIcon(pc.iconUrl)}
         >

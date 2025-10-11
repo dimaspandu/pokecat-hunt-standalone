@@ -230,13 +230,13 @@
   {
     "id": "68e909cc556e85a43d58678b",
     "name": "Guntank",
-    "iconUrl": "http://localhost:7621/cats/guntank.png",
+    "iconUrl": "/cats/guntank.png",
     "rarity": "rare"
   },
   {
     "id": "68e90a5a556e85a43d58678c",
     "name": "Shemock",
-    "iconUrl": "http://localhost:7621/cats/shemock.png",
+    "iconUrl": "/cats/shemock.png",
     "rarity": "rare"
   }
 ]
