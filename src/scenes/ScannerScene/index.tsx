@@ -66,7 +66,7 @@ export default function ScannerScene() {
         name: randomCat.name,
         lat,
         lng,
-        status: "wild",
+        status: "caught",
         iconUrl: randomCat.iconUrl,
         caughtAt: Date.now(),
         expiresAt,
